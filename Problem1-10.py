@@ -1,6 +1,9 @@
+# Problems 1-10 Project Euler
 # If we list all the natural numbers below 10 that are multiples of 3 or 5, we
 # get 3, 5, 6 and 9. The sum of these multiples is 23. Find the sum of all the
 # multiples of 3 or 5 below 1000.
+import HelperFunctions as HF
+
 def problem1(ceiling):
     sum = 0
     for x in range(1, ceiling):
@@ -34,9 +37,9 @@ def problem3(dividend):
     quotient = 2
     divisor = 2
     while quotient >= 2:
-        if isPrime(divisor) and dividend % divisor == 0:
+        if HF.isPrime(divisor) and dividend % divisor == 0:
             quotient = dividend/divisor
-            if isPrime(quotient):
+            if HF.isPrime(quotient):
                 return quotient
             dividend = quotient
         else:
@@ -44,19 +47,7 @@ def problem3(dividend):
     return 2
 
 def problem3_2(dividend):
-    return maxInList(primeFactors(dividend))
-
-
-def isPrime(n):
-    if n == 2:
-        return True
-    if n % 2 == 0 or n <= 1:
-        return False
-    sqr = int(n ** (0.5)) + 1
-    for divisor in range(3, sqr, 2):
-        if n % divisor == 0:
-            return False
-    return True
+    return HF.maxInList(HF.primeFactors(dividend))
 
 # A palindromic number reads the same both ways. The largest palindrome made from
 # the product of two 2-digit numbers is 9009=91X99. Find the largest palindrome
@@ -67,22 +58,9 @@ def problem4(start, offset):
     for x in range (start, start + 1 + offset):
         for j in range (start, start + 1 + offset):
             product = x * j
-            if palindrome(product):
+            if HF.palindrome(product):
                 highest = product
     return highest
-
-# could also just reverse the string and compare to original
-def palindrome (x):
-    n = str(x)
-    leng = len(n)
-    half1 = n[0: int(leng/2.0)]
-    half2 = n[int(leng/2.0): leng]
-    end = -1
-    for x in range (0, int(leng/2.0)):
-        if half1[x] != half2[end]:
-            return False
-        end = end - 1
-    return True
 
 # 2520 is the smallest number that can be divided by each of the numbers
 # from 1 to 10 without any remainder. What is the smallest positive
@@ -104,7 +82,7 @@ def problem6 (x):
     for x in range(1, x+1):
         sumOfSquares.append(x**(2))
         squareOfSums.append(x)
-    return (performOpOnList(squareOfSums,1))**(2) - performOpOnList(sumOfSquares,1)
+    return (HF.performOpOnList(squareOfSums,1))**(2) - HF.performOpOnList(sumOfSquares,1)
 
 # By listing the first six prime numbers: 2,3,5,7,11 and 13, we see that the
 # 6th prime number is 13. What is the 10 001st prime number?
@@ -113,7 +91,7 @@ def problem7 (ourNumber):
     if ourNumber == 1:
         return 2
     while ourNumber >= 1:
-        if (isPrime(num)):
+        if (HF.isPrime(num)):
             ourNumber = ourNumber - 1
             if ourNumber == 0:
                 return num
@@ -166,7 +144,7 @@ def problem9():
         for b in range (0,500):
             for c in range(0,500):
                 if a<b and b<c and a<c and a+b+c == 1000 and (a**2 + b**2 == c**2):
-                    #print str(a) + " " + str(b) + " " +str(c)
+                    #print (str(a) + " " + str(b) + " " +str(c))
                     return a*b*c
     return None
 
@@ -175,64 +153,28 @@ def problem9():
 def problem10(x):
     sum = 2
     for a in range(1,x,2):
-        if isPrime(a):
+        if HF.isPrime(a):
             sum = sum + a
     return sum
 
-def problem11():
-    return "Another gridddddddd!"
-
-    
-# all usage of prime factors should resort to this function
-def primeFactors (dividend):
-    quotient = 2
-    divisor = 2
-    factorlist = []
-    while quotient >= 2:
-        if isPrime(divisor) and dividend % divisor == 0:
-            quotient = dividend/divisor
-            factorlist.append(divisor)
-            dividend = quotient
-        else:
-            divisor = divisor + 1
-    return factorlist
-
-# Finds the max in a list
-def maxInList (l):
-    max = l[0]
-    for x in range (1, len(l)):
-        if max < l[x]:
-            max = l[x]
-    return max
-
-# performs an operation on all list elements
-def performOpOnList (l, op):
-    result = 1
-    for x in range(0, len(l)):
-        if op==1:
-            result = result + l[x]
-        else:
-            result = result * l[x]
-    if op == 1:
-        return result -1
-    else:
-        return result
-
 # 233168
-#print problem1(1000)
+#print (problem1(1000))
 # 4613732
-#print problem2(4000000)
+#print (problem2(4000000))
 # 6857
-#print problem3(600851475143)
-#print problem3_2(600851475143)
+#print (problem3(600851475143))
+#print (problem3_2(600851475143))
 # 906609
-#print problem4(800, 199)
+#print (problem4(800, 199))
 # 232792560 -- only numbers under 20
-#print problem5(16)
+#print (problem5(16))
 # 25164150
-# print problem6(100)
-# print problem7(10001)
-#print problem8 ()
-#print problem9()
-#print problem10(2000000)
-print problem11 ()
+#print (problem6(100))
+#104743
+#print (problem7(10001))
+#23514624000
+#print (problem8 ())
+#31875000
+#print (problem9())
+#142913828922
+#print (problem10(2000000))
